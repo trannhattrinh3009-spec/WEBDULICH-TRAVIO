@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travio - Đặt phòng khách sạn & Chuyển đổi tiền tệ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d87f0;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #ff6b6b;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #2d87f0;
+        }
+        
+        .login-btn {
+            background-color: #2d87f0;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #1a6bc7;
+        }
+        
+        .signup-btn {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: background-color 0.3s;
+        }
+        
+        .signup-btn:hover {
+            background-color: #ff5252;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            margin-bottom: 60px;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        /* Search Box */
+        .search-box {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: -80px auto 40px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #444;
+        }
+        
+        .form-control {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .search-btn {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-self: flex-end;
+        }
+        
+        .search-btn:hover {
+            background-color: #ff5252;
+        }
+        
+        /* Offers Section */
+        .offers-section {
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .section-subtitle {
+            color: #666;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .offer-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .offer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .offer-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .offer-content {
+            padding: 25px;
+        }
+        
+        .offer-title {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .offer-description {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        /* Partners */
+        .partners {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin: 50px 0;
+        }
+        
+        .partner-logo {
+            font-size: 40px;
+            color: #555;
+        }
+        
+        /* Options Section */
+        .options-section {
+            background-color: white;
+            padding: 60px 0;
+            border-radius: 20px;
+            margin: 60px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .options-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .options-text {
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .terms {
+            font-size: 14px;
+            color: #888;
+            margin: 20px 0;
+        }
+        
+        .guest-btn {
+            background-color: transparent;
+            color: #2d87f0;
+            border: 2px solid #2d87f0;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .guest-btn:hover {
+            background-color: #2d87f0;
+            color: white;
+        }
+        
+        /* Destinations */
+        .destinations {
+            padding: 60px 0;
+        }
+        
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .destination-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .destination-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .destination-img {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .destination-name {
+            padding: 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        /* ================== CURRENCY CONVERTER STYLES ================== */
+        .currency-converter-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e8f4ff 100%);
+            margin: 60px 0;
+            border-radius: 30px;
+        }
+        
+        .converter-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 992px) {
+            .converter-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .converter-box {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(45, 135, 240, 0.1);
+            border: 1px solid #e1e8ff;
+        }
+        
+        .converter-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .converter-header h3 {
+            color: #2d87f0;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .converter-header p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .converter-body {
+            padding: 20px 0;
+        }
+        
+        .input-group {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: end;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .input-group {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .input-box {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-box label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #555;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-box label i {
+            margin-right: 8px;
+            color: #2d87f0;
+        }
+        
+        .input-box input {
+            padding: 15px;
+            border: 2px solid #e1e8ff;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .input-box input:focus {
+            border-color: #2d87f0;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 135, 240, 0.1);
+        }
+        
+        .currency-select {
+            position: relative;
+            background: white;
+            border: 2px solid #e1e8ff;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .currency-select select {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%232d87f0' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            padding-right: 40px;
+        }
+        
+        .currency-select select:focus {
+            outline: none;
+        }
+        
+        .swap-btn-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 20px;
+        }
+        
+        .swap-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .swap-btn:hover {
+            background: #ff5252;
+            transform: rotate(180deg) scale(1.1);
+        }
+        
+        .convert-btn {
+            background: linear-gradient(135deg, #2d87f0, #4a9eff);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .convert-btn:hover {
+            background: linear-gradient(135deg, #1a6bc7, #2d87f0);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(45, 135, 240, 0.2);
+        }
+        
+        .result-box {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 25px;
+            text-align: center;
+            display: none;
+            animation: fadeInUp 0.5s;
+        }
+        
+        .result-box.show {
+            display: block;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .result-amount {
+            font-size: 42px;
+            font-weight: 700;
+            margin: 10px 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .result-details {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .rate-info {
+            background: rgba(255,255,255,0.2);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        
+        .popular-currencies {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        
+        .popular-currencies h4 {
+            color: #2d87f0;
+            margin-bottom: 20px;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .currency-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        @media (max-width: 576px) {
+            .currency-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .currency-card {
+            background: #f8fafc;
+            border: 2px solid #e1e8ff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .currency-card:hover {
+            background: #e8f4ff;
+            border-color: #2d87f0;
+            transform: translateY(-5px);
+        }
+        
+        .currency-card.active {
+            border-color: #2d87f0;
+            background: #e8f4ff;
+        }
+        
+        .currency-code {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d87f0;
+            margin-bottom: 5px;
+        }
+        
+        .currency-name {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .info-box {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-left: 5px solid #2d87f0;
+        }
+        
+        .info-box h4 {
+            color: #2d87f0;
+            margin-bottom: 15px;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-box p {
+            color: #666;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        /* ================== END CURRENCY CONVERTER STYLES ================== */
+        
+        /* Footer */
+        footer {
+            background-color: #2d3436;
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #ff6b6b;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Login Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #888;
+        }
+        
+        .modal-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .social-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .facebook-btn {
+            background-color: #3b5998;
+        }
+        
+        .google-btn {
+            background-color: #db4437;
+        }
+        
+        .apple-btn {
+            background-color: #000;
+        }
+        
+        /* Signup Modal */
+        #signupModal .modal-content {
+            max-width: 500px;
+        }
+        
+        /* Style cho dropdown user */
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            z-index: 1001;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .dropdown-content.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .dropdown-item {
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            color: #333;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        
+        .dropdown-item:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .dropdown-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Style cho thông báo alert */
+        .custom-alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 300px;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        .close-alert {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                margin-top: 10px;
+            }
+            
+            .nav-links li {
+                margin: 0 10px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .search-box {
+                margin-top: -40px;
+            }
+            
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-container button {
+                margin: 5px 0;
+            }
+            
+            .modal-content {
+                padding: 20px;
+                margin: 20px;
+            }
+            
+            .custom-alert {
+                left: 20px;
+                right: 20px;
+                max-width: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 5px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header với nút đăng nhập và đăng ký -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-plane"></i> Travio
+            </div>
+            <ul class="nav-links">
+                <li><a href="#"><i class="fas fa-home"></i> Trang chủ</a></li>
+                <li><a href="#destinations"><i class="fas fa-map-marker-alt"></i> Điểm đến</a></li>
+                <li><a href="#offers"><i class="fas fa-gift"></i> Ưu đãi</a></li>
+                <li><a href="#currency-converter"><i class="fas fa-money-bill-wave"></i> Chuyển đổi tiền tệ</a></li>
+                <li><a href="special-deals.html"><i class="fas fa-gift"></i> Ưu đãi đặc biệt</a></li>
+                <li><a href="#"><i class="fas fa-question-circle"></i> Trợ giúp</a></li>
+            </ul>
+            <div>
+                <button class="signup-btn" id="signupBtn">
+                    <i class="fas fa-user-plus"></i> Đăng ký
+                </button>
+                <button class="login-btn" id="openLoginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Khám phá thế giới cùng Travio</h1>
+            <p>Tìm kiếm khách sạn, chuyến bay và trải nghiệm du lịch tuyệt vời nhất với giá cả phải chăng</p>
+        </div>
+    </section>
+
+    <!-- Search Box -->
+    <div class="container">
+        <div class="search-box">
+            <h2 style="margin-bottom: 20px; color: #333;">Bạn muốn đi đâu?</h2>
+            <form class="search-form">
+                <div class="form-group">
+                    <label for="destination"><i class="fas fa-search-location"></i> Điểm đến</label>
+                    <input type="text" id="destination" class="form-control" placeholder="Nhập thành phố, địa điểm...">
+                </div>
+                <div class="form-group">
+                    <label for="checkin"><i class="fas fa-calendar-alt"></i> Ngày nhận phòng</label>
+                    <input type="date" id="checkin" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="checkout"><i class="fas fa-calendar-alt"></i> Ngày trả phòng</label>
+                    <input type="date" id="checkout" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="guests"><i class="fas fa-users"></i> Số khách</label>
+                    <select id="guests" class="form-control">
+                        <option>1 người lớn</option>
+                        <option>2 người lớn</option>
+                        <option>2 người lớn, 1 trẻ em</option>
+                        <option>2 người lớn, 2 trẻ em</option>
+                        <option>Lựa chọn khác</option>
+                    </select>
+                </div>
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i> Tìm kiếm
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Offers Section -->
+    <section class="offers-section" id="offers">
+        <div class="container">
+            <h2 class="section-title">Ưu đãi không thể bỏ qua</h2>
+            <p class="section-subtitle">Khám phá các ưu đãi đặc biệt từ các đối tác hàng đầu của chúng tôi</p>
+            
+            <div class="offers-grid">
+                <div class="offer-card">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Khách sạn sang trọng" class="offer-img">
+                    <div class="offer-content">
+                        <h3 class="offer-title">Giảm 30% phòng Luxury</h3>
+                        <p class="offer-description">Đặt phòng cao cấp tại các khách sạn 5 sao với giá ưu đãi đặc biệt</p>
+                        <button class="search-btn" style="padding: 10px 20px; font-size: 16px;">Xem ngay</button>
+                    </div>
+                </div>
+                
+                <div class="offer-card">
+                    <img src="https://images.unsplash.com/photo-1571008887538-b36bb32f4571?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Combo du lịch" class="offer-img">
+                    <div class="offer-content">
+                        <h3 class="offer-title">Combo máy bay + khách sạn</h3>
+                        <p class="offer-description">Tiết kiệm đến 40% khi đặt combo vé máy bay và khách sạn cùng lúc</p>
+                        <button class="search-btn" style="padding: 10px 20px; font-size: 16px;">Xem ngay</button>
+                    </div>
+                </div>
+                
+                <div class="offer-card">
+                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Đặt phòng last minute" class="offer-img">
+                    <div class="offer-content">
+                        <h3 class="offer-title">Last Minute Deals</h3>
+                        <p class="offer-description">Ưu đãi giờ chót với giá cực sốc cho các chuyến đi bất ngờ</p>
+                        <button class="search-btn" style="padding: 10px 20px; font-size: 16px;">Xem ngay</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Partners -->
+            <div class="partners">
+                <div class="partner-logo">
+                    <i class="fab fa-apple" style="color: #000; font-size: 50px;"></i>
+                </div>
+                <div class="partner-logo">
+                    <i class="fab fa-facebook" style="color: #3b5998; font-size: 50px;"></i>
+                </div>
+                <div class="partner-logo">
+                    <i class="fab fa-google" style="color: #db4437; font-size: 50px;"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Options Section -->
+    <section class="options-section">
+        <div class="container options-container">
+            <h2 class="section-title">Lựa chọn khác</h2>
+            <p class="options-text">Nhận giá thấp hơn và tích lũy điểm thưởng khi đăng ký thành viên! Bằng việc tiếp tục, bạn đồng ý với các điều khoản và điều kiện của chúng tôi.</p>
+            <p class="options-text">Chúng tôi sẽ giúp bạn tìm khách sạn mơ ước hoặc hoạt động gần bạn.</p>
+            
+            <button class="search-btn" style="margin: 20px 0;">
+                <i class="fas fa-arrow-right"></i> TIẾP THEO
+            </button>
+            
+            <p class="terms">Bằng việc tiếp tục, bạn đồng ý với <a href="#" style="color: #2d87f0;">Điều khoản & Điều kiện</a> của chúng tôi.</p>
+            
+            <button class="guest-btn" id="guestSearchBtn">
+                <i class="fas fa-user"></i> Tìm kiếm với tư cách khách
+            </button>
+        </div>
+    </section>
+
+    <!-- Destinations -->
+<section class="destinations" id="destinations">
+    <div class="container">
+        <h2 class="section-title">Khách sạn hàng đầu tại các điểm đến phổ biến</h2>
+       
+        
+        <!-- THÊM DÒNG NÀY -->
+        <div class="destinations-grid">
+            <div class="destination-card">
+                <img src="../images/hanoi.jpg" alt="Hanoi" class="destination-img">
+                <div class="destination-name">Hanoi</div>
+            </div>
+            <div class="destination-card">
+                <img src="../images/saigon.jpg" alt="Saigon" class="destination-img">
+                <div class="destination-name">Saigon</div>
+            </div>
+            <div class="destination-card">
+                <img src="../images/hoian.png" alt="Hoi An" class="destination-img">
+                <div class="destination-name">Hoi An</div>
+            </div>
+            <div class="destination-card">
+                <img src="../images/danang.png" alt="Da Nang" class="destination-img">
+                <div class="destination-name">Da Nang</div>
+            </div>
+            <div class="destination-card">
+                <img src="../images/saudi.jpeg" alt="Saudi Arabia" class="destination-img">
+                <div class="destination-name">Saudi Arabia</div>
+            </div>
+        </div>
+        <div class="destination-card">
+            <img src="../images/hanoi.jpg" alt="Hanoi" class="destination-img">
+            <div class="destination-name">Hanoi</div>
+        </div>
+        <div class="destination-card">
+            <img src="../images/saigon.jpg" alt="Saigon" class="destination-img">
+            <div class="destination-name">Saigon</div>
+        </div>
+        <div class="destination-card">
+            <img src="../images/hoian.png" alt="Hoi An" class="destination-img">
+            <div class="destination-name">Hoi An</div>
+        </div>
+        <div class="destination-card">
+            <img src="../images/danang.png" alt="Da Nang" class="destination-img">
+            <div class="destination-name">Da Nang</div>
+        </div>
+        <div class="destination-card">
+            <img src="../images/saudi.jpeg" alt="Saudi Arabia" class="destination-img">
+            <div class="destination-name">Saudi Arabia</div>
+        </div>
+    </div>
+
+    <!-- Hotel Display Section -->
+<section class="hotels-section" id="hotelsSection" style="display: none; padding: 60px 0;">
+    <div class="container">
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <div>
+                <h2 class="section-title" id="cityTitle">Khách sạn tại Hà Nội</h2>
+                <p class="section-subtitle" id="cityDescription">Khám phá các khách sạn tốt nhất tại Hà Nội</p>
+            </div>
+            <button class="guest-btn" id="backToDestinationsBtn">
+                <i class="fas fa-arrow-left"></i> Quay lại
+            </button>
+        </div>
+        
+        <div class="hotels-filter" style="margin-bottom: 30px;">
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <button class="filter-btn active" data-filter="all">Tất cả</button>
+                <button class="filter-btn" data-filter="budget"><i class="fas fa-wallet"></i> Giá rẻ</button>
+                <button class="filter-btn" data-filter="luxury"><i class="fas fa-crown"></i> Cao cấp</button>
+                <button class="filter-btn" data-filter="nearby"><i class="fas fa-map-marker-alt"></i> Gần trung tâm</button>
+                <button class="filter-btn" data-filter="rating"><i class="fas fa-star"></i> Đánh giá cao</button>
+            </div>
+        </div>
+        
+        <div class="hotels-grid" id="hotelsGrid">
+            <!-- Hotels will be populated by JavaScript -->
+        </div>
+        
+        <div class="loading-spinner" id="hotelsLoading" style="text-align: center; padding: 40px; display: none;">
+            <div style="font-size: 48px; color: #2d87f0; margin-bottom: 20px;">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+            <p>Đang tải danh sách khách sạn...</p>
+        </div>
+    </div>
+</section>
+    
+
+<!-- ================== CURRENCY CONVERTER SECTION ================== -->
+<section class="currency-converter-section" id="currency-converter">
+    <div class="container">
+        <div class="converter-wrapper">
+            <!-- Converter Box -->
+            <div class="converter-box">
+                <div class="converter-header">
+                    <h3><i class="fas fa-exchange-alt"></i> Chuyển đổi tiền tệ</h3>
+                    <p>Chuyển đổi tiền tệ nhanh chóng với tỷ giá cập nhật thời gian thực</p>
+                </div>
+                
+                <div class="converter-body">
+                    <div class="input-group">
+                        <div class="input-box">
+                            <label for="amount"><i class="fas fa-money-bill-wave"></i> Số tiền</label>
+                            <input type="number" id="amount" placeholder="Nhập số tiền" min="0" step="0.01" value="1000000">
+                        </div>
+                        
+                        <div class="swap-btn-container">
+                            <button class="swap-btn" id="swapBtn">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="input-box">
+                            <label for="fromCurrency"><i class="fas fa-arrow-up"></i> Từ</label>
+                            <div class="currency-select">
+                                <select id="fromCurrency">
+                                    <option value="VND" selected>VND - Đồng Việt Nam</option>
+                                    <option value="USD">USD - Đô la Mỹ</option>
+                                    <option value="EUR">EUR - Euro</option>
+                                    <option value="GBP">GBP - Bảng Anh</option>
+                                    <option value="JPY">JPY - Yên Nhật</option>
+                                    <option value="KRW">KRW - Won Hàn Quốc</option>
+                                    <option value="SGD">SGD - Đô la Singapore</option>
+                                    <option value="AUD">AUD - Đô la Úc</option>
+                                    <option value="CAD">CAD - Đô la Canada</option>
+                                    <option value="CHF">CHF - Franc Thụy Sĩ</option>
+                                    <option value="CNY">CNY - Nhân dân tệ</option>
+                                    <option value="THB">THB - Bạt Thái</option>
+                                    <option value="MYR">MYR - Ringgit Malaysia</option>
+                                    <option value="IDR">IDR - Rupiah Indonesia</option>
+                                    <option value="PHP">PHP - Peso Philippines</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="input-box">
+                            <label for="toCurrency"><i class="fas fa-arrow-down"></i> Sang</label>
+                            <div class="currency-select">
+                                <select id="toCurrency">
+                                    <option value="USD" selected>USD - Đô la Mỹ</option>
+                                    <option value="VND">VND - Đồng Việt Nam</option>
+                                    <option value="EUR">EUR - Euro</option>
+                                    <option value="GBP">GBP - Bảng Anh</option>
+                                    <option value="JPY">JPY - Yên Nhật</option>
+                                    <option value="KRW">KRW - Won Hàn Quốc</option>
+                                    <option value="SGD">SGD - Đô la Singapore</option>
+                                    <option value="AUD">AUD - Đô la Úc</option>
+                                    <option value="CAD">CAD - Đô la Canada</option>
+                                    <option value="CHF">CHF - Franc Thụy Sĩ</option>
+                                    <option value="CNY">CNY - Nhân dân tệ</option>
+                                    <option value="THB">THB - Bạt Thái</option>
+                                    <option value="MYR">MYR - Ringgit Malaysia</option>
+                                    <option value="IDR">IDR - Rupiah Indonesia</option>
+                                    <option value="PHP">PHP - Peso Philippines</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="convert-btn" id="convertBtn">
+                        <i class="fas fa-calculator"></i> Chuyển đổi
+                    </button>
+                    
+                    <div class="result-box" id="resultBox">
+                        <div class="result-amount" id="convertedAmount">0</div>
+                        <div class="result-details" id="conversionDetails">
+                            <span id="fromAmount">0</span> <span id="fromCurr">USD</span> = 
+                            <span id="toAmount">0</span> <span id="toCurr">VND</span>
+                        </div>
+                        <div class="rate-info">
+                            Tỷ giá: 1 <span id="rateFrom">USD</span> = <span id="exchangeRate">23,000</span> <span id="rateTo">VND</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Popular Currencies -->
+            <div class="popular-currencies">
+                <h4><i class="fas fa-star"></i> Tiền tệ phổ biến</h4>
+                <div class="currency-grid" id="popularCurrencies">
+                    <!-- Popular currency cards will be populated by JavaScript -->
+                </div>
+                
+                <div class="info-box" style="margin-top: 30px;">
+                    <h4><i class="fas fa-info-circle"></i> Lưu ý khi chuyển đổi</h4>
+                    <p>Tỷ giá được cập nhật hàng ngày từ các nguồn uy tín. Kết quả chuyển đổi chỉ mang tính chất tham khảo. Tỷ giá thực tế có thể thay đổi tùy ngân hàng và thời điểm giao dịch.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ================== END CURRENCY CONVERTER SECTION ================== -->
+
+<!-- ================== FLIGHT BOOKING SECTION ================== -->
+<section class="flight-booking-section" style="padding: 80px 0; background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%); color: white;">
+    <div class="container">
+        <div class="converter-box" style="max-width: 900px; margin: 0 auto; background: rgba(255, 255, 255, 0.95); color: #333;">
+            <div class="converter-header">
+                <h3 style="color: #1a237e;"><i class="fas fa-plane-departure"></i> Đặt vé máy bay & Nhận Countdown</h3>
+                <p style="color: #666;">Đặt vé để nhận đếm ngược real-time và ưu đãi độc quyền</p>
+            </div>
+            
+            <div class="converter-body">
+                <!-- Quick Booking Button -->
+                <div style="text-align: center; margin: 40px 0;">
+                    <a href="ticket.html" class="convert-btn" style="background: linear-gradient(135deg, #FF9800, #FF5722); text-decoration: none; display: inline-block; max-width: 400px;">
+                        <i class="fas fa-ticket-alt"></i> ĐẶT VÉ MÁY BAY NGAY
+                    </a>
+                    <p style="margin-top: 15px; color: #666; font-size: 14px;">
+                        ✈️ Nhận e-ticket với QR code<br>
+                        ⏱️ Countdown real-time đến chuyến bay<br>
+                        🎁 Ưu đãi đặc biệt chỉ cho khách đã book
+                    </p>
+                </div>
+                
+                <!-- Current Booking Status -->
+                <div id="bookingStatus" style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 30px; text-align: center; display: none;">
+                    <h4 style="color: #1a237e; margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: #4CAF50;"></i> Bạn đã có vé!</h4>
+                    <p id="currentFlightInfo" style="color: #666; margin-bottom: 15px;"></p>
+                    <a href="special-deals.html" class="guest-btn" style="background: #4CAF50; color: white; border: none;">
+                        <i class="fas fa-external-link-alt"></i> Xem Countdown & Ưu đãi
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ================== END FLIGHT BOOKING SECTION ================== -->
+
+<!-- Footer -->
+<footer>
+    <!-- ... footer content ... -->
+</footer>
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Travio</h3>
+                <p>Dịch vụ đặt phòng khách sạn và tour du lịch hàng đầu Việt Nam</p>
+            </div>
+            <div class="footer-column">
+                <h3>Về chúng tôi</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Về Travio</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                    <li><a href="#">Tuyển dụng</a></li>
+                    <li><a href="#">Trung tâm hỗ trợ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Điều khoản</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Điều khoản sử dụng</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                    <li><a href="#">Chính sách cookie</a></li>
+                    <li><a href="#">Chính sách hoàn tiền</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Theo dõi chúng tôi</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 Travio. Tất cả các quyền được bảo lưu.
+        </div>
+    </div>
+</footer>
+
+<!-- Login Modal -->
+<div class="modal" id="loginModal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeLogin">&times;</span>
+        <h2 class="modal-title">Đăng nhập vào Travio</h2>
+        <form class="login-form">
+            <input type="email" placeholder="Email" class="form-control">
+            <input type="password" placeholder="Mật khẩu" class="form-control">
+            <button type="submit" class="search-btn">Đăng nhập</button>
+        </form>
+        <div class="social-login">
+            <div class="social-btn facebook-btn">
+                <i class="fab fa-facebook-f"></i>
+            </div>
+            <div class="social-btn google-btn">
+                <i class="fab fa-google"></i>
+            </div>
+            <div class="social-btn apple-btn">
+                <i class="fab fa-apple"></i>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 20px;">Chưa có tài khoản? <a href="#" id="switchToSignup" style="color: #2d87f0;">Đăng ký ngay</a></p>
+    </div>
+</div>
+
+<!-- Signup Modal -->
+<div class="modal" id="signupModal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeSignup">&times;</span>
+        <h2 class="modal-title">Đăng ký tài khoản Travio</h2>
+        <form class="login-form">
+            <input type="text" placeholder="Họ và tên" class="form-control">
+            <input type="email" placeholder="Email" class="form-control">
+            <input type="password" placeholder="Mật khẩu" class="form-control">
+            <input type="password" placeholder="Xác nhận mật khẩu" class="form-control">
+            <button type="submit" class="search-btn">Đăng ký</button>
+        </form>
+        <div class="social-login">
+            <div class="social-btn facebook-btn">
+                <i class="fab fa-facebook-f"></i>
+            </div>
+            <div class="social-btn google-btn">
+                <i class="fab fa-google"></i>
+            </div>
+            <div class="social-btn apple-btn">
+                <i class="fab fa-apple"></i>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 20px;">Đã có tài khoản? <a href="#" id="switchToLogin" style="color: #2d87f0;">Đăng nhập ngay</a></p>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    // ================== TOÀN BỘ JAVASCRIPT ==================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Modal elements
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        const openLoginBtn = document.getElementById('openLoginBtn');
+        const closeLogin = document.getElementById('closeLogin');
+        const signupBtn = document.getElementById('signupBtn');
+        const closeSignup = document.getElementById('closeSignup');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+        
+        // Open Login Modal
+        openLoginBtn.addEventListener('click', function() {
+            loginModal.style.display = 'flex';
+        });
+        
+        // Open Signup Modal
+        signupBtn.addEventListener('click', function() {
+            signupModal.style.display = 'flex';
+        });
+        
+        // Switch to Signup Modal
+        switchToSignup.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginModal.style.display = 'none';
+            signupModal.style.display = 'flex';
+        });
+        
+        // Switch to Login Modal
+        switchToLogin.addEventListener('click', function(e) {
+            e.preventDefault();
+            signupModal.style.display = 'none';
+            loginModal.style.display = 'flex';
+        });
+        
+        // Close Modals
+        closeLogin.addEventListener('click', function() {
+            loginModal.style.display = 'none';
+        });
+        
+        closeSignup.addEventListener('click', function() {
+            signupModal.style.display = 'none';
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+            if (e.target === signupModal) {
+                signupModal.style.display = 'none';
+            }
+        });
+        
+        // Show alert function
+        function showAlert(message, type = 'info') {
+            const colors = {
+                success: '#4CAF50',
+                error: '#f44336',
+                info: '#2196F3',
+                warning: '#ff9800'
+            };
+            
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'custom-alert';
+            alertDiv.style.backgroundColor = colors[type] || colors.info;
+            
+            const textSpan = document.createElement('span');
+            textSpan.textContent = message;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'close-alert';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.addEventListener('click', function() {
+                alertDiv.style.animation = 'slideOut 0.3s';
+                setTimeout(() => {
+                    document.body.removeChild(alertDiv);
+                }, 300);
+            });
+            
+            alertDiv.appendChild(textSpan);
+            alertDiv.appendChild(closeBtn);
+            
+            document.body.appendChild(alertDiv);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (document.body.contains(alertDiv)) {
+                    alertDiv.style.animation = 'slideOut 0.3s';
+                    setTimeout(() => {
+                        if (document.body.contains(alertDiv)) {
+                            document.body.removeChild(alertDiv);
+                        }
+                    }, 300);
+                }
+            }, 5000);
+        }
+        
+        // Guest search button
+        const guestSearchBtn = document.getElementById('guestSearchBtn');
+        if (guestSearchBtn) {
+            guestSearchBtn.addEventListener('click', function() {
+                showAlert('Tìm kiếm với tư cách khách đã được kích hoạt. Bạn có thể tìm kiếm và xem các ưu đãi!', 'success');
+            });
+        }
+        
+        // Search form submission
+        const searchForm = document.querySelector('.search-form');
+        if (searchForm) {
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const destination = document.getElementById('destination').value;
+                if (!destination) {
+                    showAlert('Vui lòng nhập điểm đến!', 'warning');
+                    return;
+                }
+                showAlert(`Đang tìm kiếm khách sạn tại ${destination}...`, 'info');
+            });
+        }
+        
+        // ================== CURRENCY CONVERTER LOGIC ==================
+        
+        // Define exchange rates (approximate values as of 2023)
+        const exchangeRates = {
+            VND: { 
+                USD: 0.000043, EUR: 0.000037, GBP: 0.000032, JPY: 0.0048, 
+                KRW: 0.05, SGD: 0.000059, AUD: 0.000057, CAD: 0.000058,
+                CHF: 0.000038, CNY: 0.00031, THB: 0.0015, MYR: 0.00020,
+                IDR: 0.065, PHP: 0.0024, VND: 1
+            },
+            USD: { 
+                VND: 23250, EUR: 0.85, GBP: 0.73, JPY: 110, 
+                KRW: 1150, SGD: 1.35, AUD: 1.3, CAD: 1.33,
+                CHF: 0.88, CNY: 7.15, THB: 34.5, MYR: 4.65,
+                IDR: 15000, PHP: 56.5, USD: 1
+            },
+            EUR: { 
+                VND: 27350, USD: 1.18, GBP: 0.86, JPY: 130, 
+                KRW: 1350, SGD: 1.59, AUD: 1.53, CAD: 1.57,
+                CHF: 1.04, CNY: 8.42, THB: 40.6, MYR: 5.47,
+                IDR: 17650, PHP: 66.5, EUR: 1
+            },
+            GBP: { 
+                VND: 31850, USD: 1.37, EUR: 1.16, JPY: 151, 
+                KRW: 1570, SGD: 1.84, AUD: 1.78, CAD: 1.82,
+                CHF: 1.20, CNY: 9.78, THB: 47.2, MYR: 6.36,
+                IDR: 20550, PHP: 77.5, GBP: 1
+            },
+            JPY: { 
+                VND: 210, USD: 0.0091, EUR: 0.0077, GBP: 0.0066, 
+                KRW: 10.45, SGD: 0.0123, AUD: 0.0118, CAD: 0.0121,
+                CHF: 0.0080, CNY: 0.065, THB: 0.314, MYR: 0.0423,
+                IDR: 136.5, PHP: 0.514, JPY: 1
+            },
+            KRW: { 
+                VND: 20, USD: 0.00087, EUR: 0.00074, GBP: 0.00064, 
+                JPY: 0.096, SGD: 0.00117, AUD: 0.00113, CAD: 0.00116,
+                CHF: 0.00077, CNY: 0.0062, THB: 0.030, MYR: 0.00404,
+                IDR: 13.04, PHP: 0.0491, KRW: 1
+            },
+            SGD: { 
+                VND: 17000, USD: 0.74, EUR: 0.63, GBP: 0.54, 
+                JPY: 81.5, KRW: 850, AUD: 0.96, CAD: 0.98,
+                CHF: 0.65, CNY: 5.29, THB: 25.5, MYR: 3.44,
+                IDR: 11100, PHP: 41.8, SGD: 1
+            },
+            AUD: { 
+                VND: 17700, USD: 0.77, EUR: 0.65, GBP: 0.56, 
+                JPY: 85, KRW: 885, SGD: 1.04, CAD: 1.06,
+                CHF: 0.70, CNY: 5.50, THB: 26.5, MYR: 3.57,
+                IDR: 11550, PHP: 43.5, AUD: 1
+            },
+            CAD: { 
+                VND: 17250, USD: 0.75, EUR: 0.64, GBP: 0.55, 
+                JPY: 82.5, KRW: 860, SGD: 1.02, AUD: 0.94,
+                CHF: 0.66, CNY: 5.38, THB: 26.0, MYR: 3.50,
+                IDR: 11300, PHP: 42.5, CAD: 1
+            },
+            CHF: { 
+                VND: 26300, USD: 1.13, EUR: 0.96, GBP: 0.83, 
+                JPY: 125, KRW: 1300, SGD: 1.54, AUD: 1.43,
+                CAD: 1.51, CNY: 8.13, THB: 39.2, MYR: 5.28,
+                IDR: 17050, PHP: 64.2, CHF: 1
+            },
+            CNY: { 
+                VND: 3230, USD: 0.14, EUR: 0.119, GBP: 0.102, 
+                JPY: 15.38, KRW: 161, SGD: 0.189, AUD: 0.182,
+                CAD: 0.186, CHF: 0.123, THB: 4.83, MYR: 0.65,
+                IDR: 2100, PHP: 7.90, CNY: 1
+            },
+            THB: { 
+                VND: 670, USD: 0.029, EUR: 0.0246, GBP: 0.0212, 
+                JPY: 3.19, KRW: 33.3, SGD: 0.0392, AUD: 0.0377,
+                CAD: 0.0385, CHF: 0.0255, CNY: 0.207, MYR: 0.134,
+                IDR: 435, PHP: 1.64, THB: 1
+            },
+            MYR: { 
+                VND: 5000, USD: 0.215, EUR: 0.183, GBP: 0.157, 
+                JPY: 23.7, KRW: 247, SGD: 0.291, AUD: 0.280,
+                CAD: 0.286, CHF: 0.189, CNY: 1.54, THB: 7.45,
+                IDR: 3250, PHP: 12.15, MYR: 1
+            },
+            IDR: { 
+                VND: 1.54, USD: 0.000067, EUR: 0.000057, GBP: 0.000049, 
+                JPY: 0.0073, KRW: 0.0767, SGD: 0.000090, AUD: 0.000087,
+                CAD: 0.000088, CHF: 0.000059, CNY: 0.00048, THB: 0.0023,
+                MYR: 0.00031, PHP: 0.0038, IDR: 1
+            },
+            PHP: { 
+                VND: 415, USD: 0.0177, EUR: 0.0150, GBP: 0.0129, 
+                JPY: 1.95, KRW: 20.4, SGD: 0.0239, AUD: 0.0230,
+                CAD: 0.0235, CHF: 0.0156, CNY: 0.127, THB: 0.610,
+                MYR: 0.0823, IDR: 265, PHP: 1
+            }
+        };
+        
+        // All available currencies for dropdown
+        const allCurrencies = [
+            { code: 'VND', name: 'Đồng Việt Nam', flag: '🇻🇳' },
+            { code: 'USD', name: 'Đô la Mỹ', flag: '🇺🇸' },
+            { code: 'EUR', name: 'Euro', flag: '🇪🇺' },
+            { code: 'GBP', name: 'Bảng Anh', flag: '🇬🇧' },
+            { code: 'JPY', name: 'Yên Nhật', flag: '🇯🇵' },
+            { code: 'KRW', name: 'Won Hàn Quốc', flag: '🇰🇷' },
+            { code: 'SGD', name: 'Đô la Singapore', flag: '🇸🇬' },
+            { code: 'AUD', name: 'Đô la Úc', flag: '🇦🇺' },
+            { code: 'CAD', name: 'Đô la Canada', flag: '🇨🇦' },
+            { code: 'CHF', name: 'Franc Thụy Sĩ', flag: '🇨🇭' },
+            { code: 'CNY', name: 'Nhân dân tệ', flag: '🇨🇳' },
+            { code: 'THB', name: 'Bạt Thái', flag: '🇹🇭' },
+            { code: 'MYR', name: 'Ringgit Malaysia', flag: '🇲🇾' },
+            { code: 'IDR', name: 'Rupiah Indonesia', flag: '🇮🇩' },
+            { code: 'PHP', name: 'Peso Philippines', flag: '🇵🇭' }
+        ];
+        
+        // Popular currencies data
+        const popularCurrencies = [
+            { code: 'USD', name: 'Đô la Mỹ', flag: '🇺🇸' },
+            { code: 'EUR', name: 'Euro', flag: '🇪🇺' },
+            { code: 'GBP', name: 'Bảng Anh', flag: '🇬🇧' },
+            { code: 'JPY', name: 'Yên Nhật', flag: '🇯🇵' },
+            { code: 'KRW', name: 'Won Hàn', flag: '🇰🇷' },
+            { code: 'SGD', name: 'Đô la Singapore', flag: '🇸🇬' }
+        ];
+        
+        // DOM elements for currency converter
+        const amountInput = document.getElementById('amount');
+        const fromCurrency = document.getElementById('fromCurrency');
+        const toCurrency = document.getElementById('toCurrency');
+        const swapBtn = document.getElementById('swapBtn');
+        const convertBtn = document.getElementById('convertBtn');
+        const resultBox = document.getElementById('resultBox');
+        const convertedAmount = document.getElementById('convertedAmount');
+        const fromAmount = document.getElementById('fromAmount');
+        const toAmount = document.getElementById('toAmount');
+        const fromCurr = document.getElementById('fromCurr');
+        const toCurr = document.getElementById('toCurr');
+        const rateFrom = document.getElementById('rateFrom');
+        const rateTo = document.getElementById('rateTo');
+        const exchangeRate = document.getElementById('exchangeRate');
+        const popularCurrenciesContainer = document.getElementById('popularCurrencies');
+        
+        // Format currency with commas
+        function formatCurrency(amount, currencyCode) {
+            // Custom formatting for different currencies
+            const symbols = {
+                'USD': '$',
+                'EUR': '€',
+                'GBP': '£',
+                'JPY': '¥',
+                'CNY': '¥',
+                'KRW': '₩',
+                'VND': '₫',
+                'THB': '฿',
+                'PHP': '₱'
+            };
+            
+            const symbol = symbols[currencyCode] || '';
+            
+            // Determine decimal places
+            const isWholeCurrency = ['VND', 'JPY', 'KRW', 'IDR'].includes(currencyCode);
+            const decimalPlaces = isWholeCurrency ? 0 : 2;
+            
+            // Format number with commas
+            const formattedNumber = amount.toLocaleString('vi-VN', {
+                minimumFractionDigits: decimalPlaces,
+                maximumFractionDigits: decimalPlaces
+            });
+            
+            // Return with appropriate symbol
+            if (symbol === '₫') {
+                return formattedNumber + ' ' + symbol;
+            } else if (symbol) {
+                return symbol + ' ' + formattedNumber;
+            } else {
+                return formattedNumber + ' ' + currencyCode;
+            }
+        }
+        
+        // Calculate and display conversion
+        function convertCurrency() {
+            const amount = parseFloat(amountInput.value);
+            const from = fromCurrency.value;
+            const to = toCurrency.value;
+            
+            if (isNaN(amount) || amount <= 0) {
+                showAlert('Vui lòng nhập số tiền hợp lệ!', 'warning');
+                amountInput.focus();
+                return;
+            }
+            
+            // Get exchange rate
+            const rate = exchangeRates[from][to];
+            
+            if (!rate) {
+                showAlert('Không tìm thấy tỷ giá cho cặp tiền tệ này!', 'error');
+                return;
+            }
+            
+            // Calculate converted amount
+            const result = amount * rate;
+            
+            // Update result display
+            convertedAmount.textContent = formatCurrency(result, to);
+            fromAmount.textContent = amount.toLocaleString('vi-VN');
+            toAmount.textContent = result.toLocaleString('vi-VN');
+            fromCurr.textContent = from;
+            toCurr.textContent = to;
+            rateFrom.textContent = from;
+            rateTo.textContent = to;
+            exchangeRate.textContent = rate.toLocaleString('vi-VN');
+            
+            // Show result box with animation
+            resultBox.classList.add('show');
+            
+            // Scroll to result for better UX
+            setTimeout(() => {
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+            
+            // Show success alert
+            showAlert(`Đã chuyển đổi ${formatCurrency(amount, from)} thành ${formatCurrency(result, to)}`, 'success');
+        }
+        
+        // Swap currencies
+        function swapCurrencies() {
+            const fromValue = fromCurrency.value;
+            const toValue = toCurrency.value;
+            
+            fromCurrency.value = toValue;
+            toCurrency.value = fromValue;
+            
+            // Trigger conversion after swap
+            convertCurrency();
+        }
+        
+        // Populate popular currencies
+        function populatePopularCurrencies() {
+            popularCurrenciesContainer.innerHTML = '';
+            
+            popularCurrencies.forEach(currency => {
+                const currencyCard = document.createElement('div');
+                currencyCard.className = 'currency-card';
+                currencyCard.innerHTML = `
+                    <div class="currency-code">${currency.flag} ${currency.code}</div>
+                    <div class="currency-name">${currency.name}</div>
+                `;
+                
+                currencyCard.addEventListener('click', function() {
+                    // Set as "to" currency
+                    toCurrency.value = currency.code;
+                    
+                    // Convert with new selection
+                    convertCurrency();
+                    
+                    // Add active class
+                    document.querySelectorAll('.currency-card').forEach(card => {
+                        card.classList.remove('active');
+                    });
+                    currencyCard.classList.add('active');
+                });
+                
+                popularCurrenciesContainer.appendChild(currencyCard);
+            });
+        }
+        
+        // Initialize currency dropdowns with all currencies
+        function initializeCurrencyDropdowns() {
+            // Clear existing options
+            fromCurrency.innerHTML = '';
+            toCurrency.innerHTML = '';
+            
+            // Add all currencies to dropdowns
+            allCurrencies.forEach(currency => {
+                const fromOption = document.createElement('option');
+                fromOption.value = currency.code;
+                fromOption.textContent = `${currency.code} - ${currency.name}`;
+                if (currency.code === 'VND') fromOption.selected = true;
+                fromCurrency.appendChild(fromOption);
+                
+                const toOption = document.createElement('option');
+                toOption.value = currency.code;
+                toOption.textContent = `${currency.code} - ${currency.name}`;
+                if (currency.code === 'USD') toOption.selected = true;
+                toCurrency.appendChild(toOption);
+            });
+        }
+        
+        // Event listeners for currency converter
+        convertBtn.addEventListener('click', convertCurrency);
+        swapBtn.addEventListener('click', swapCurrencies);
+        
+        // Convert on Enter key in amount input
+        amountInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                convertCurrency();
+            }
+        });
+        
+        // Auto-convert when changing currencies
+        fromCurrency.addEventListener('change', convertCurrency);
+        toCurrency.addEventListener('change', convertCurrency);
+        
+        // Initialize currency dropdowns and popular currencies
+        initializeCurrencyDropdowns();
+        populatePopularCurrencies();
+        
+        // Perform initial conversion
+        convertCurrency();
+        
+        // ================== USER PROFILE DROPDOWN ==================
+        // This would be implemented after user login
+        // For now, we'll simulate a user profile button after "login"
+        const loginForm = document.querySelector('#loginModal .login-form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.querySelector('input[type="email"]').value;
+                
+                // Close modal
+                loginModal.style.display = 'none';
+                
+                // Change login button to user dropdown
+                const loginContainer = openLoginBtn.parentNode;
+                openLoginBtn.style.display = 'none';
+                signupBtn.style.display = 'none';
+                
+                const userDropdown = document.createElement('div');
+                userDropdown.className = 'user-dropdown';
+                userDropdown.innerHTML = `
+                    <button class="login-btn" id="userProfileBtn">
+                        <i class="fas fa-user-circle"></i> ${email.split('@')[0]}
+                    </button>
+                    <div class="dropdown-content" id="dropdownMenu">
+                        <a class="dropdown-item"><i class="fas fa-user"></i> Hồ sơ</a>
+                        <a class="dropdown-item"><i class="fas fa-bell"></i> Thông báo</a>
+                        <a class="dropdown-item"><i class="fas fa-heart"></i> Yêu thích</a>
+                        <a class="dropdown-item"><i class="fas fa-cog"></i> Cài đặt</a>
+                        <a class="dropdown-item" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                    </div>
+                `;
+                
+                loginContainer.appendChild(userDropdown);
+                
+                // Add event listeners for dropdown
+                const userProfileBtn = document.getElementById('userProfileBtn');
+                const dropdownMenu = document.getElementById('dropdownMenu');
+                const logoutBtn = document.getElementById('logoutBtn');
+                
+                userProfileBtn.addEventListener('click', function() {
+                    dropdownMenu.classList.toggle('show');
+                });
+                
+                logoutBtn.addEventListener('click', function() {
+                    // Remove user dropdown and show login buttons again
+                    loginContainer.removeChild(userDropdown);
+                    openLoginBtn.style.display = 'inline-block';
+                    signupBtn.style.display = 'inline-block';
+                    showAlert('Đã đăng xuất thành công!', 'info');
+                });
+                
+                // Close dropdown when clicking outside
+                window.addEventListener('click', function(e) {
+                    if (!e.target.matches('#userProfileBtn')) {
+                        if (dropdownMenu && dropdownMenu.classList.contains('show')) {
+                            dropdownMenu.classList.remove('show');
+                        }
+                    }
+                });
+                
+                // Show success alert
+                showAlert(`Đăng nhập thành công! Chào mừng ${email}`, 'success');
+            });
+        }
+        
+        // Handle signup form submission
+        const signupForm = document.querySelector('#signupModal .login-form');
+        if (signupForm) {
+            signupForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = this.querySelector('input[type="text"]').value;
+                const email = this.querySelector('input[type="email"]').value;
+                const password = this.querySelectorAll('input[type="password"]')[0].value;
+                const confirmPassword = this.querySelectorAll('input[type="password"]')[1].value;
+                
+                if (password !== confirmPassword) {
+                    showAlert('Mật khẩu xác nhận không khớp!', 'error');
+                    return;
+                }
+                
+                // Close modal
+                signupModal.style.display = 'none';
+                
+                // Show success alert
+                showAlert(`Đăng ký thành công! Chào mừng ${name} đến với Travio`, 'success');
+            });
+        }
+        
+        // Initialize date inputs with tomorrow and day after tomorrow
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+        
+        const dayAfterTomorrow = new Date(today);
+        dayAfterTomorrow.setDate(today.getDate() + 2);
+        
+        // Format date as YYYY-MM-DD for input fields
+        function formatDate(date) {
+            return date.toISOString().split('T')[0];
+        }
+        
+        const checkinInput = document.getElementById('checkin');
+        const checkoutInput = document.getElementById('checkout');
+        
+        if (checkinInput && checkoutInput) {
+            checkinInput.min = formatDate(today);
+            checkinInput.value = formatDate(tomorrow);
+            
+            checkoutInput.min = formatDate(tomorrow);
+            checkoutInput.value = formatDate(dayAfterTomorrow);
+        }
+        
+        // Offer card buttons
+        const offerButtons = document.querySelectorAll('.offer-card .search-btn');
+        offerButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const offerTitle = this.closest('.offer-card').querySelector('.offer-title').textContent;
+                showAlert(`Bạn đã chọn ưu đãi: ${offerTitle}. Đang chuyển hướng...`, 'info');
+            });
+        });
+        
+        // Destination cards
+        const destinationCards = document.querySelectorAll('.destination-card');
+        destinationCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const destinationName = this.querySelector('.destination-name').textContent;
+                showAlert(`Đang tìm khách sạn tại ${destinationName}...`, 'info');
+            });
+        });
+    });
+</script>
+</body>
+</html>

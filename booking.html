@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt vé máy bay - PhungHotGirl</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a237e, #3949ab);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .booking-container {
+            background: white;
+            color: #333;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1a237e;
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .flight-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        label {
+            font-weight: 600;
+            color: #1a237e;
+            font-size: 0.95rem;
+        }
+        
+        input, select {
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus {
+            border-color: #1a237e;
+            outline: none;
+        }
+        
+        .route-display {
+            background: #f0f7ff;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1a237e;
+            border: 2px dashed #3949ab;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.4);
+        }
+        
+        .booking-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+            color: #666;
+        }
+        
+        .step.active .step-number {
+            background: #1a237e;
+            color: white;
+        }
+        
+        .step-text {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .step.active .step-text {
+            color: #1a237e;
+            font-weight: 600;
+        }
+        
+        .booking-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50px;
+            right: 50px;
+            height: 3px;
+            background: #ddd;
+            z-index: 1;
+        }
+        
+        .booking-success {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+        
+        .success-message {
+            font-size: 1.5rem;
+            color: #1a237e;
+            margin-bottom: 20px;
+        }
+        
+        .view-ticket-btn {
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .booking-steps {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .booking-steps::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="booking-container">
+        <div class="header">
+            <div class="logo">✈️Travio</div>
+            <div class="tagline">Đặt vé máy bay - Nhận ưu đãi độc quyền</div>
+        </div>
+        
+        <div class="booking-steps">
+            <div class="step active">
+                <div class="step-number">1</div>
+                <div class="step-text">Chọn chuyến bay</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-text">Nhập thông tin</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-text">Xác nhận</div>
+            </div>
+        </div>
+        
+        <div id="bookingForm">
+            <div class="route-display">Điểm Đi → Điểm đến</div>
+            
+            <form class="flight-form" id="flightBookingForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="flightDate">Ngày khởi hành</label>
+                        <input type="date" id="flightDate" value="2026-01-19" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="passengers">Số hành khách</label>
+                        <select id="passengers" required>
+                            <option value="1">1 hành khách</option>
+                            <option value="2">2 hành khách</option>
+                            <option value="3">3 hành khách</option>
+                            <option value="4">4 hành khách</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="class">Hạng vé</label>
+                    <select id="class" required>
+                        <option value="economy">Hạng Phổ Thông</option>
+                        <option value="business" selected>Hạng Thương Gia</option>
+                        <option value="first">Hạng Nhất</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">Họ và tên đệm</label>
+                        <input type="text" id="firstName" placeholder="Enter your firstname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Tên</label>
+                        <input type="text" id="lastName" placeholder="Enter your lastname" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="email@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Số điện thoại</label>
+                        <input type="tel" id="phone" placeholder="0123 456 789" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">🎫 ĐẶT VÉ NGAY & XEM ƯU ĐÃI</button>
+            </form>
+        </div>
+        
+        <div class="booking-success" id="successMessage">
+            <div class="success-icon">✅</div>
+            <div class="success-message">Đặt vé thành công!</div>
+            <p>Vé của bạn đã được xác nhận. Chuyến bay: QH154 • 19/01/2026 • 9:05</p>
+            <p>Kiểm tra email để nhận e-ticket và ưu đãi độc quyền.</p>
+            <a href="ticket.html" class="view-ticket-btn">XEM VÉ VÀ ĐẾM NGƯỢC</a>
+        </div>
+    </div>
+
+    <script>
+        // Xử lý form đặt vé
+        document.getElementById('flightBookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Lấy thông tin từ form
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const flightDate = document.getElementById('flightDate').value;
+            const passengers = document.getElementById('passengers').value;
+            const flightClass = document.getElementById('class').value;
+            const email = document.getElementById('email').value;
+            
+            // Lưu thông tin vào localStorage để trang ticket.html có thể lấy
+            const bookingData = {
+                firstName: firstName,
+                lastName: lastName,
+                fullName: firstName + ' ' + lastName,
+                flightDate: flightDate,
+                passengers: passengers,
+                flightClass: flightClass,
+                email: email,
+                bookingTime: new Date().toISOString(),
+                flightNumber: 'QH154',
+                departure: '9:05',
+                boarding: '8:25',
+                terminal: 'Terminal 1'
+            };
+            
+            localStorage.setItem('flightBooking', JSON.stringify(bookingData));
+            
+            // Hiển thị thông báo thành công
+            document.getElementById('bookingForm').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Cập nhật các bước
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.add('active');
+            });
+            
+            // Tự động chuyển trang sau 5 giây
+            setTimeout(() => {
+                window.location.href = 'ticket.html';
+            }, 5000);
+        });
+        
+        // Định dạng hiển thị ngày mặc định
+        const today = new Date();
+        const nextWeek = new Date(today);
+        nextWeek.setDate(today.getDate() + 7);
+        
+        const formattedDate = nextWeek.toISOString().split('T')[0];
+        document.getElementById('flightDate').min = formattedDate;
+        
+        // Hiệu ứng cho các bước
+        document.querySelectorAll('input, select').forEach(element => {
+            element.addEventListener('focus', function() {
+                const stepNumber = this.closest('.form-row') ? '2' : '1';
+                document.querySelectorAll('.step').forEach(step => {
+                    step.classList.remove('active');
+                });
+                document.querySelector(`.step:nth-child(${stepNumber})`).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
